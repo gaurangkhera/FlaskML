@@ -84,11 +84,12 @@ def upload_csvs():
 @app.route('/algorithms', methods=['GET', 'POST'])
 @login_required
 def algorithms():
+    code=[]
+    num_cols = []
     if len(current_user.csvs) <= 0:
         flash('Please upload a CSV first.')
+        return redirect(url_for('upgrade'))
     else:
-        code=[]
-        num_cols = []
         if current_user.membership != 'Free':
                 data = pd.read_csv(f'hack/static/csvs/{current_user.username}.csv', sep=f'{current_user.sep}')
                 for c in data.columns:
@@ -138,17 +139,18 @@ def upgrade():
 @app.route('/algorithms_knn', methods=['GET', 'POST'])
 @login_required
 def knn():
+    code = []
+    num_cols = []
     if len(current_user.csvs) <= 0:
         flash('Please upload a CSV first.', 'error')
+        return redirect(url_for('upgrade'))
     else:
-        code=[]
-        num_columns = []
         if current_user.membership != 'Free':
                 data = pd.read_csv(f'hack/static/csvs/{current_user.username}.csv', sep=request.form.get('csv_sep'))
-                num_columns = []
+                num_cols = []
                 for c in data.columns:
                     if data[c].dtypes != object:
-                        num_columns.append(c)
+                        num_cols.append(c)
                 if request.method == 'POST':
                     code = ['import pandas as pd', 'import numpy as np', 'from sklearn.neighbours import KNeighboursClassifier', 'import sklearn']
                     predict = request.form.get('column_sel')
@@ -163,6 +165,6 @@ def knn():
                     code.append('prediction = model.predict(x_test)')
         else:
             flash('You need to purchase FlaskML PRO to use this feature.')
-    return render_template('algorithms_knn.html', code=code, num_cols=num_columns)
+    return render_template('algorithms_knn.html', code=code, num_cols=num_cols)
 if __name__ == '__main__':
     app.run(debug=True)
