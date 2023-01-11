@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    Upgrade to PRO
+{% endblock %}
+{% block content %}
+    <center>
+        <h1>Purchase FlaskML PRO</h1>
+        <form method="post">
+            <script
+              src="https://checkout.stripe.com/checkout.js"
+              class="stripe-button"
+              data-key="{{ key }}"
+              data-description="FlaskML PRO payment"
+              data-amount="{{amount}}"
+              data-locale="auto">
+            </script>
+          </form>
+      
+    </center>
+{% endblock %}

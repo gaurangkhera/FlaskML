@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+    Algorithms
+{% endblock %}
+{% block content %}
+<center>
+  <h1 class="mb-0">Linear Regression</h1>
+</center>
+<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/algorithms" class="nav-link active" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Linear regression
+        </a>
+      </li>
+      <li>
+        <a href="/algorithms_knn" class="nav-link">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          KNN
+        </a>
+      </li>
+    </ul>
+  </div>
+  <center>
+    <form action="/algorithms" method="post" class="w-25 container-fluid mb-4">
+      <input type="text" name="csv_name" id="" class="form-control mb-2" placeholder="Enter CSV name">
+      <select class="form-select"  name="column_sel">
+        {% for opt in num_cols %}
+          <option>{{opt}}</option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" class="btn btn-primary rounded-pill">Select</button>
+
+    </form>
+  </center>
+<div class="w-25 mb-2 container-fluid" id="code">
+  {% for line in code %}
+    {{line}}<br>
+  {% endfor %}
+</div>
+<center><button class="btn btn-primary mb-4 rounded-pill" onclick="copy()">Copy</button></center>
+<script>
+  function copy(){
+    let text = document.getElementById('code');
+    navigator.clipboard.writeText(text.innerText)
+  }
+</script>
+{% endblock %}

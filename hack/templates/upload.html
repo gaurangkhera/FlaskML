@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    Upload a CSV
+{% endblock %}
+{% block content %}
+<br><br><br><br><br><br><br> 
+<center><h1>Upload a CSV</h1></center>
+<form action="/upload" method="post" class="container-fluid w-25" enctype="multipart/form-data">
+  {{form.hidden_tag()}}
+    {{form.csrf_token}}
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">CSV file</label>
+      {{form.csv(class='form-control')}}
+      <label for="exampleInputEmail1" class="form-label">Seperator</label>
+      {{form.sep(class='form-control', placeholder="Seperator used in your CSV")}}
+    </div>
+    {{form.submit(class='btn btn-primary rounded-pill')}}
+  </form>
+  <center class="text-danger font-bold">{{mess}}</center>
+{% endblock %}

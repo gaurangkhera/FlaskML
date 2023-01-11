@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+    KNN classification - Algorithms
+{% endblock %}
+{% block content %}
+<center>
+  <h1 class="mb-0">KNN classification</h1>
+</center>
+<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/algorithms" class="nav-link" aria-current="page">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+          Linear Regression
+        </a>
+      </li>
+      <li>
+        <a href="/algorithms_knn" class="nav-link active">
+          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+          KNN
+        </a>
+      </li>
+    </ul>
+  </div>
+  <center>
+    <h3>Select column to classify</h3>
+    <form action="/algorithms_knn" method="post" class="w-25 container-fluid mb-4">
+      <input type="text" name="csv_name" id="" class="form-control mb-2" placeholder="Enter CSV name">
+      <input type="text" name="n_neighbours" class='form-control mb-2' placeholder="Enter number of neighbours">
+      <select name="column_sel" class="form-select mb-2">
+        {% for num in num_cols %}
+          <option value="{{num}}">{{num}}</option>
+        {% endfor %}
+        </select>
+      <button type="submit" class="btn btn-primary rounded-pill">Select</button>
+    </form>
+<div class="w-25 mb-2" id="code">
+  {% for code_ in code %}
+    <p class="text-start mb-0">{{code_}}</p>
+  {% endfor %}
+</div>
+<button class="btn btn-primary mb-4 rounded-pill" onclick="copy()">Copy</button>
+</center>
+<script>
+  function copy(){
+    let text = document.getElementById('code');
+    navigator.clipboard.writeText(text.innerText)
+  }
+</script>
+{% endblock %}
